@@ -8,7 +8,7 @@
      </div>
      <!-- 表单容器  要绑定model属性 rules属性(表单验证规则)-->
      <!-- 加上:才会把model看成一个变量 -->
-     <el-form :model="loginForm" :rules="loginRules" style="margin-top:21px;">
+     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" style="margin-top:21px;">
      <!-- 每行都是一个el-form-item -->
      <el-form-item prop="mobile">
        <!-- input标签  双向绑定v-model-->
@@ -22,7 +22,7 @@
        <el-checkbox v-model="loginForm.checked" style="color:#ccc">我已阅读并同意用户协议和隐私条款</el-checkbox>
      </el-form-item>
 <el-form-item>
-  <el-button style="width:100%" type="primary" round>登陆</el-button>
+  <el-button @click="login" style="width:100%" type="primary" round>登陆</el-button>
 </el-form-item>
      </el-form>
     </el-card>
@@ -60,6 +60,22 @@ export default {
         }]
 
       }
+    }
+  },
+  methods: {
+    login () {
+      // 第一种方法
+      // this.$refs.loginForm.validate(function (isOK) {
+      //   if (isOK) {
+      //     console.log('校验通过')
+      //   } else {
+      //     console.log('校验未通过')
+      //   }
+      // })
+      // 第二种方法
+      this.$refs.loginForm.validate().then(() => {
+        alert('666')
+      })
     }
   }
 }
