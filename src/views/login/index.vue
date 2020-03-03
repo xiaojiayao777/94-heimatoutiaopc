@@ -15,7 +15,7 @@
        <el-input  v-model="loginForm.mobile" placeholder="请输入手机号"></el-input>
      </el-form-item>
      <el-form-item prop="code">
-       <el-input v-model="loginForm.code" style="width:60%;" placeholder="请验证码"></el-input>
+       <el-input v-model="loginForm.code" style="width:60%;" placeholder="请输入验证码"></el-input>
        <el-button style="float:right; width:35%" plain>发送验证码</el-button>
      </el-form-item>
      <el-form-item prop="checked">
@@ -41,6 +41,23 @@ export default {
       },
       // 定义表单的验证规则
       loginRules: {
+        // 手机号的验证规则
+        mobile: [{ required: true, message: '您的手机号不能为空' },
+        // 正则表达式 以1开头，第二个数字是3-9，后边还有9个数字的格式
+          { pattern: /^1[3-9]\d{9}$/, message: '您的手机号格式不正确' }],
+        // 验证码的验证规则
+        code: [{ required: true, message: '您的验证码不能为空' },
+        // 验证码要求六个数字
+          { pattern: /^\d{6}$/, message: '验证码应该是六位数字' }],
+        // 是否勾选的验证规则
+        // required不能验证false和true，为true，是必填项
+        // 自定义校验 如果value为true则校验成功
+        checked: [{
+          validator: function (rule, value, callback) {
+            // 三元表达式 value为true则成功 如果成功则执行callback（），false则失败，执行callback（new Error（'错误信息'））
+            value ? callback() : callback(new Error('您必须同意我们的霸王条款之后才可以继续'))
+          }
+        }]
 
       }
     }
