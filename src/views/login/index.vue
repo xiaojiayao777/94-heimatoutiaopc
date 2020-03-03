@@ -6,19 +6,20 @@
      <div class="title">
        <img src="../../assets/img/logo_index.png" alt="">
      </div>
-     <!-- 表单容器 -->
-     <el-form  style="margin-top:21px;">
+     <!-- 表单容器  要绑定model属性 rules属性(表单验证规则)-->
+     <!-- 加上:才会把model看成一个变量 -->
+     <el-form :model="loginForm" :rules="loginRules" style="margin-top:21px;">
      <!-- 每行都是一个el-form-item -->
-     <el-form-item>
-       <!-- input标签 -->
-       <el-input  placeholder="请输入手机号"></el-input>
+     <el-form-item prop="mobile">
+       <!-- input标签  双向绑定v-model-->
+       <el-input  v-model="loginForm.mobile" placeholder="请输入手机号"></el-input>
      </el-form-item>
-     <el-form-item>
-       <el-input style="width:60%;" placeholder="请验证码"></el-input>
+     <el-form-item prop="code">
+       <el-input v-model="loginForm.code" style="width:60%;" placeholder="请验证码"></el-input>
        <el-button style="float:right; width:35%" plain>发送验证码</el-button>
      </el-form-item>
-     <el-form-item >
-       <el-checkbox style="color:#ccc">我已阅读并同意用户协议和隐私条款</el-checkbox>
+     <el-form-item prop="checked">
+       <el-checkbox v-model="loginForm.checked" style="color:#ccc">我已阅读并同意用户协议和隐私条款</el-checkbox>
      </el-form-item>
 <el-form-item>
   <el-button style="width:100%" type="primary" round>登陆</el-button>
@@ -30,7 +31,20 @@
 
 <script>
 export default {
+  data () {
+    return {
+      // 定义一个登录表单数据的对象
+      loginForm: {
+        mobile: '', // 手机号
+        code: '', // 验证码
+        checked: false// 是否同意用户协议
+      },
+      // 定义表单的验证规则
+      loginRules: {
 
+      }
+    }
+  }
 }
 </script>
 
