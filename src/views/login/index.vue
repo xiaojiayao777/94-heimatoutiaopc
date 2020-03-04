@@ -74,7 +74,22 @@ export default {
       // })
       // 第二种方法
       this.$refs.loginForm.validate().then(() => {
-        alert('666')
+        // 成功之后校验就会到达 .then
+        // 通过校验之后，应该调用登陆接口，看看手机号是否正确
+        // alert('666')
+        this.$axios({
+          // 请求地址
+          url: '/authorizations',
+          // body请求体参数
+          data: this.loginForm,
+          // 请求类型
+          method: 'post'
+        }).then(result => {
+          // 成功之后打印结果
+          // console.log(result.data)
+        }).catch(() => {
+
+        })
       })
     }
   }
