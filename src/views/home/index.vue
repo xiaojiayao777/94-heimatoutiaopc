@@ -2,8 +2,9 @@
 <!-- 现在最外层放置一个大容器，因为小容器只能放在大容器里 -->
  <el-container>
    <!-- 左边侧边栏容器 -->
-   <el-aside>
-      <h1>左侧导航区域</h1>
+   <el-aside  style="width:230px">
+      <!-- 使用组件 -->
+      <layout-aside></layout-aside>
    </el-aside>
    <!-- 右侧容器 一个大容器 可以再嵌套一个大容器 -->
    <el-container>
@@ -22,8 +23,13 @@
 </template>
 
 <script>
+// 将我们的左侧导航组件引用进来
+import LayoutAside from '@/components/home/layout-aside'
 export default {
-
+  // 局部注册
+  components: {
+    'layout-aside': LayoutAside
+  }
 }
 </script>
 

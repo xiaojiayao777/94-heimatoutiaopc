@@ -53,6 +53,7 @@ export default {
         // required不能验证false和true，为true，是必填项
         // 自定义校验 如果value为true则校验成功
         checked: [{
+          // rule是当前规则 value是当前要校验的值 callback是一个必须执行的函数，成功的时候执行callback，失败的时候执行callback里面的newError
           validator: function (rule, value, callback) {
             // 三元表达式 value为true则成功 如果成功则执行callback（），false则失败，执行callback（new Error（'错误信息'））
             value ? callback() : callback(new Error('您必须同意我们的霸王条款之后才可以继续'))
