@@ -8,11 +8,11 @@
      </el-col>
      <el-col class="right" :span="12">
        <el-row type="flex" justify="end" align="middle">
-         <img src="http://img1.imgtn.bdimg.com/it/u=2003328295,1600589916&fm=26&gp=0.jpg" alt="">
+         <img :src="userInfo.photo" alt="">
          <!-- 下拉菜单 -->
          <el-dropdown trigger="click">
             <!-- 下拉菜单显示内容 -->
-            <span>乔鹿的贼船</span>
+            <span>{{userInfo.name}}</span>
             <!-- 下拉内容需要做具名插槽dropdown   el-dropdown-menu是专门做下拉内容效果的组件-->
             <el-dropdown-menu slot="dropdown" >
                <!-- 下拉选项 el-dropdown-item是专门做下拉选项的组件 -->
@@ -31,7 +31,27 @@
 
 <script>
 export default {
-
+  data () {
+    return {
+      // y用户个人信息
+      userInfo: {}
+    }
+  },
+  created () {
+    // 从兜里拿钥匙===从缓存中取token
+    const token = localStorage.getItem('user-token')
+    this.$axios({
+      // 请求地址
+      url: '/user/profile',
+      //  放置请求头参数
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then(result => {
+      // 如果加载成功了，把数据给useInfo
+      this.userInfo = result.data.data
+    })
+  }
 }
 </script>
 
