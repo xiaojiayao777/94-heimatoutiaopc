@@ -24,15 +24,15 @@
 
 <script>
 // 将我们的左侧导航组件引用进来
-import LayoutAside from '@/components/home/layout-aside'
-import LayoutHeader from '@/components/home/layout-header'
+// import LayoutAside from '@/components/home/layout-aside'
+// import LayoutHeader from '@/components/home/layout-header'
 
 export default {
   // 局部注册
-  components: {
-    'layout-aside': LayoutAside,
-    'layout-header': LayoutHeader
-  }
+//   components: {
+//     'layout-aside': LayoutAside,
+//     'layout-header': LayoutHeader
+//   }
 }
 </script>
 

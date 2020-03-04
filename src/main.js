@@ -9,8 +9,12 @@ import 'element-ui/lib/theme-chalk/index.css'
 import '@/styles/index.less'
 // 引入axios
 import axios from 'axios'
+// 引入
+import Components from '@/components'
 
 Vue.config.productionTip = false
+// 注册开发的自定义组件
+Vue.use(Components)
 // 全局注册，一旦全局注册可在任何地方使用组件
 // vue.use实际上会调用element UI的install方法，并且传入当前的Vue对象
 Vue.use(ElementUI)
