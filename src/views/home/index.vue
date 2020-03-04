@@ -10,7 +10,7 @@
    <el-container>
       <!-- 头部顶栏容器 -->
       <el-header>
-         <h1>顶部操作栏</h1>
+         <layout-header></layout-header>
       </el-header>
       <!-- 主要区域 -->
       <el-main>
@@ -25,10 +25,13 @@
 <script>
 // 将我们的左侧导航组件引用进来
 import LayoutAside from '@/components/home/layout-aside'
+import LayoutHeader from '@/components/home/layout-header'
+
 export default {
   // 局部注册
   components: {
-    'layout-aside': LayoutAside
+    'layout-aside': LayoutAside,
+    'layout-header': LayoutHeader
   }
 }
 </script>
