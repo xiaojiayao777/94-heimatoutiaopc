@@ -89,8 +89,14 @@ export default {
           // console.log(result.data)
           // 把token存于本地缓存，用的时候兜里拿
           window.localStorage.setItem('user-token', result.data.token)
+          // 跳转到主页
+          // push和router-link类似to属性可以直接是字符串也可以是对象
+          this.$router.push('/home')
         }).catch(() => {
-
+          // 第一种用法
+          // this.$message({ message: '用户名或者密码错误', type: 'error' })
+          // 第二种方法
+          this.$message.error('错了哦，这是一条错误消息')
         })
       })
     }
