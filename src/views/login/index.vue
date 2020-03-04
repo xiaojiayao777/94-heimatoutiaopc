@@ -87,6 +87,8 @@ export default {
         }).then(result => {
           // 成功之后打印结果
           // console.log(result.data)
+          // 把token存于本地缓存，用的时候兜里拿
+          window.localStorage.setItem('user-token', result.data.token)
         }).catch(() => {
 
         })
