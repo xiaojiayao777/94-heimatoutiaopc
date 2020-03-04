@@ -7,11 +7,17 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 // 引入默认样式
 import '@/styles/index.less'
+// 引入axios
+import axios from 'axios'
 
 Vue.config.productionTip = false
 // 全局注册，一旦全局注册可在任何地方使用组件
 // vue.use实际上会调用element UI的install方法，并且传入当前的Vue对象
 Vue.use(ElementUI)
+// 配置axios的baseURL 公共的请求头地址
+axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0'
+// 将axios赋值给vue对象的原型属性
+Vue.prototype.$axios = axios
 new Vue({
   router,
   render: h => h(App)
