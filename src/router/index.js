@@ -30,6 +30,11 @@ const routes = [
         // 默认的二级路由组件
         component: SecondHome
 
+      }, {
+        // 地址 简写path：‘comment’ 不写/
+        path: '/home/comment',
+        // 组件 按需加载的方式
+        component: () => import('@/views/comment')
       }
     ]
   },
