@@ -11,6 +11,8 @@ import '@/styles/index.less'
 import axios from 'axios'
 // 引入
 import Components from '@/components'
+// 引入权限模块
+import '@/permission'
 
 Vue.config.productionTip = false
 // 注册开发的自定义组件
