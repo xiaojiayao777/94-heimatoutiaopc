@@ -13,9 +13,9 @@
          <layout-header></layout-header>
       </el-header>
       <!-- 主要区域 -->
-      <el-main>
+      <el-main style="padding:0;">
          <!-- 这里应该放置一个二级容器  -->
-         <h1>主要区域</h1>
+         <!-- <h1>主要区域</h1> -->
          <router-view></router-view>
       </el-main>
    </el-container>
