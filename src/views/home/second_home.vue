@@ -16,7 +16,8 @@ export default {
     return {
       list: ['http://img.netbian.com/file/2019/0220/52ea84369dd40268d595766c76fda7f3.jpg',
         'http://img.netbian.com/file/2020/0101/ed53728a0593fca90d434019c9b9be23.jpg',
-        'http://img.netbian.com/file/2019/0824/fe28123a86549be48bc00d639da77c60.jpg', 'http://img4.imgtn.bdimg.com/it/u=2096603689,1889806653&fm=26&gp=0.jpg',
+        'http://img0.imgtn.bdimg.com/it/u=3638437088,2703654524&fm=26&gp=0.jpg',
+        'http://img4.imgtn.bdimg.com/it/u=2096603689,1889806653&fm=26&gp=0.jpg',
         'http://img0.imgtn.bdimg.com/it/u=3956287167,4089297313&fm=26&gp=0.jpg',
         'http://img5.imgtn.bdimg.com/it/u=1617632401,88084066&fm=15&gp=0.jpg',
         'http://img3.imgtn.bdimg.com/it/u=2626933181,578186626&fm=26&gp=0.jpg']

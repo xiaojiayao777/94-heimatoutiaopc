@@ -60,14 +60,14 @@ export default {
   },
   created () {
     // 从兜里拿钥匙===从缓存中取token
-    const token = localStorage.getItem('user-token')
+    // const token = localStorage.getItem('user-token')
     this.$axios({
       // 请求地址
-      url: '/user/profile',
-      //  放置请求头参数
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
+      url: '/user/profile'
+      // //  放置请求头参数
+      // headers: {
+      //   Authorization: `Bearer ${token}`
+      // }
     }).then(result => {
       // 如果加载成功了，把数据给useInfo
       this.userInfo = result.data.data
