@@ -70,7 +70,7 @@ export default {
       // }
     }).then(result => {
       // 如果加载成功了，把数据给useInfo
-      this.userInfo = result.data.data
+      this.userInfo = result.data
     })
   }
 }

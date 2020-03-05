@@ -88,7 +88,7 @@ export default {
         }).then(result => {
           // 成功之后打印结果
           // console.log(result.data)
-          // 把token存于本地缓存，用的时候兜里拿
+          // 把token存于本地缓存，用的时候兜里拿 result.data.data.token 解构之前的代码
           window.localStorage.setItem('user-token', result.data.token)
           // 跳转到主页
           // push和router-link类似to属性可以直接是字符串也可以是对象
