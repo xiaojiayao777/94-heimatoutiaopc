@@ -1,6 +1,6 @@
 <template>
 <!-- 使用elementUI的面包屑 设置一下分隔符-->
-  <el-breadcrumb separator="">
+  <el-breadcrumb separator=">">
     <!-- el-breadcrumb-item相当于router-link -->
      <el-breadcrumb-item to="/home">首页</el-breadcrumb-item>
      <!-- 第二个选项是动态的 需要通过传值的方式传进来 props传值 slot插槽 -->
