@@ -2,7 +2,7 @@
 <!-- 现在最外层放置一个大容器，因为小容器只能放在大容器里 -->
  <el-container>
    <!-- 左边侧边栏容器 -->
-   <el-aside  style="width:230px">
+   <el-aside  style="width:230px;background:#2e2f32">
       <!-- 使用组件 -->
       <layout-aside></layout-aside>
    </el-aside>
