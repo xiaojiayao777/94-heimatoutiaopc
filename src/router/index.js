@@ -35,7 +35,12 @@ const routes = [
         path: '/home/comment',
         // 组件 按需加载的方式
         component: () => import('@/views/comment')
+      }, {
+        // 按需加载的方式
+        path: '/home/material',
+        component: () => import('@/views/material')
       }
+
     ]
   },
   {

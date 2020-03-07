@@ -26,11 +26,15 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less" scope>
 .second-home {
   /* calc是计算的意思 可在css中计算数值  用法calc（四则运算） 变量之间和运算符之间一定要有空格*/
   height: calc(100vh - 60px);
   background-size: cover;
   background-image: url(https://pic.qqtn.com/up/2019-5/15579893934255491.jpg);
+  img{
+    width: 100%;
+    height: 100%;
+  }
 }
 </style>
