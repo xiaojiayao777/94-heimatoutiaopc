@@ -1,6 +1,6 @@
 <template>
 <!-- 用一个el-card组件作主页面 -->
-<el-card>
+<el-card v-loading="loading">
 <!-- 使用面包屑 谁用面包屑谁填坑 放置一个面包屑 slot="header"表示面包屑会作为具名插槽给card的header部分-->
    <bread-crumb slot="header">
    <!-- slot="title"表示评论管理给面包屑的插槽 -->
@@ -52,7 +52,11 @@ export default {
         pageSize: 10
 
       },
-      list: []
+      list: [
+
+      ],
+      // 控制loading的显示或者隐藏
+      loading: false
     }
   },
   methods: {
@@ -64,6 +68,8 @@ export default {
     },
     //   先定义一个获取评论数据的方法
     getComment () {
+      // 打开遮罩层
+      this.loading = true
       //  用axios调用接口
       this.$axios({
         // 请求地址
@@ -85,6 +91,9 @@ export default {
         //   console.log(result)
         // 我们需要在获取完数据之后 将总数赋值给total
         this.page.total = result.data.total_count
+
+        // 请求完毕  关闭遮罩层
+        this.loading = false
       })
     },
     //  定义一个格式化布尔值
