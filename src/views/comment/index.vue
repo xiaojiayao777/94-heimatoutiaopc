@@ -29,6 +29,11 @@
       </el-table-column>
 
    </el-table>
+   <!-- 放置分页组件  需要动态的数据    total是当前总条数  current_page当前的页码  page-size每页多少条  @current-change监听事件-->
+   <el-row style="height:80px" type="flex" align="middle" justify="center">
+       <el-pagination background layout='prev,pager,next' :current-page="page.currenPage" :total="page.total" :page-size="page.pageSize" @current-change="changePage"></el-pagination>
+   </el-row>
+
 </el-card>
 
 </template>
@@ -37,26 +42,49 @@
 export default {
   data () {
     return {
+    //  分页参数单独放置一个对象 让数据更清晰
+      page: {
+        // 默认总条数是0
+        total: 0,
+        // 默认页码是第一页  决定了当前页码是第几页
+        currenPage: 1,
+        // 当前页码的条数  当前页码有多少条 默认是10条
+        pageSize: 10
+
+      },
       list: []
     }
   },
   methods: {
+    // 定义一个页码改变事件  newPage就是点击切换的最新页面  将最新的页码设置给page下的当前页码
+    changePage (newPage) {
+      this.page.currenPage = newPage
+      // 页码已经切换成最新的了 重新拉取数据
+      this.getComment()
+    },
     //   先定义一个获取评论数据的方法
     getComment () {
       //  用axios调用接口
       this.$axios({
         // 请求地址
         url: '/articles',
+        // 接口是可以传分页数据的 如果你不传分页数据 默认查第一页的数据
         //   qurey参数应该在哪个位置传
         // axios 有两个传参的地方 params传get参数也就是query参数  data传body参数也就是请求体参数
         params: {
           // 此参数是用来控制获取数据类型
-          response_type: 'comment'
+          response_type: 'comment',
+          // 查第一页
+          page: this.page.currenPage,
+          // 查10条
+          per_page: this.page.pageSize
         }
       }).then(result => {
         // 应该将返回结果中的数组 给list
         this.list = result.data.results
-      //   console.log(result)
+        //   console.log(result)
+        // 我们需要在获取完数据之后 将总数赋值给total
+        this.page.total = result.data.total_count
       })
     },
     //  定义一个格式化布尔值
