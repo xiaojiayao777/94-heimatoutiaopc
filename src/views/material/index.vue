@@ -42,6 +42,14 @@
             </div>
         </el-tab-pane>
      </el-tabs>
+     <!-- 放置一个公共的分页组件 -->
+     <el-row type="flex" justify="center" style="height:80px;" align="middle">
+       <!-- 放置分页组件  total总条数 current-page当前页码  page-size每页多少条-->
+       <el-pagination background :total="page.total" :current-page="page.currentPage" :page-size="page.pageSize" layout="prev,pager,next" @current-change="changePage">
+
+       </el-pagination>
+
+     </el-row>
   </el-card>
 </template>
 
@@ -52,10 +60,27 @@ export default {
       // 当前激活的页签
       activeName: 'all',
       // 全部素材的数据 承担全部和收藏的数据
-      list: []
+      list: [],
+      // 一般会在专门的对象中存放分页信息
+      page: {
+        // 当前页数 默认为1
+        currentPage: 1,
+        // 当前总数
+        total: 0,
+        // 当前每页条数
+        pageSize: 8
+      }
     }
   },
   methods: {
+    changePage (newPage) {
+      // 定义一个方法 该方法会在页码切换时执行
+      // 会传入一个新页
+      // 将新页码赋值给页码数据
+      this.page.currentPage = newPage
+      // 获取数据
+      this.getMaterial()
+    },
     // 获取素材数据
     getMaterial () {
       this.$axios({
@@ -63,16 +88,29 @@ export default {
         url: '/user/images',
         // method: 'get'
         params: {
+          // get参数 也就是query参数
           // 是否是收藏的数据 获取不是收藏的数据（获取全部的数据） 所以用false
-          collect: this.activeName === 'collect'// 这个位置应该根据当前的页签变活
-        }, // get参数 也就是query参数
-        data: { }// data参数 body参数 也就是响应体参数
+          // 这个位置应该根据当前的页签变活
+          collect: this.activeName === 'collect',
+          //  取页码变量的值 因为只要页码变量一变 获取的数据跟着变
+          page: this.page.currentPage,
+          // 获取每页数量
+          per_page: this.page.pageSize
+
+        },
+        data: { // data参数 body参数 也就是响应体参数
+        }
       }).then(result => {
         // 需要将返回的数据赋值到data中的数据
         this.list = result.data.results
+        // 将总条数赋值给total变量
+        // 总数 全部素材的总数  收藏素材的总数 跟随当前的页签的变化而变化
+        this.page.total = result.data.total_count
       })
     },
     changeTab () {
+      // 将页码在切换页签的时候 重置为第一页 因为分类变了 数据变了
+      this.page.currentPage = 1
       // 切换页签事件 来绑定click事件
       // alert(this.activeName)
       // 可以根据当前的activeName来决定当前获取的是哪方面的数据
