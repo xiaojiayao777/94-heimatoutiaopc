@@ -35,8 +35,8 @@ export default {
     return {
       // y用户个人信息
       userInfo: {
-        name: '22',
-        photo: 'http://img1.imgtn.bdimg.com/it/u=2003328295,1600589916&fm=26&gp=0.jpg'
+        // name: '22',
+        // photo: 'http://img1.imgtn.bdimg.com/it/u=2003328295,1600589916&fm=26&gp=0.jpg'
       }
     }
   },

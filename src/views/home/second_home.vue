@@ -26,7 +26,7 @@ export default {
 }
 </script>
 
-<style lang="less" scope>
+<style lang="less">
 .second-home {
   /* calc是计算的意思 可在css中计算数值  用法calc（四则运算） 变量之间和运算符之间一定要有空格*/
   height: calc(100vh - 60px);
