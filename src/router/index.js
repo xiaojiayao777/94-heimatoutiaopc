@@ -39,6 +39,9 @@ const routes = [
         // 按需加载的方式
         path: '/home/material',
         component: () => import('@/views/material')
+      }, {
+        path: '/home/articles',
+        component: () => import('@/views/articles')
       }
 
     ]
