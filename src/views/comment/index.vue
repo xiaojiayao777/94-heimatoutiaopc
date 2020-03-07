@@ -81,8 +81,10 @@ export default {
           method: 'put',
           params: {
             // query参数
-            // 要求参数的文章id
-            article_id: row.id
+            // 要求参数的文章id 将BigNumber类型转化为字符串
+            // 前端转字符串到后端 只要和原来的数字一致就行 后端会自动将字符串转成大数字，只需要保证id和传过来的id一致就行
+            // 评论会失败就是因为原来给你传了9152 你回传了9200 所以只要保证9152不被转化 就可以使用原来的功能
+            article_id: row.id.toString()
           },
           data: {
             // body参数
