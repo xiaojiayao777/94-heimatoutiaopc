@@ -4,7 +4,7 @@
     <!-- :span是因为“12”本来是字符串，加上：之后就会看成数字 -->
      <el-col class="left" :span="12" >
         <i class="el-icon-s-fold"></i>
-        <span>江苏传智播客教育科技股份有限公司</span>
+        <span>懒懒图片的小窝</span>
      </el-col>
      <el-col class="right" :span="12">
        <el-row type="flex" justify="end" align="middle">

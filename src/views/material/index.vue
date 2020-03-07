@@ -8,6 +8,15 @@
           素材管理
         </template>
      </bread-crumb>
+     <!-- 放置一个上传的组件  布局组件el-row-->
+    <el-row type="flex" justify="end">
+      <!-- 上传组件要求必须传action属性 不传就会报错 -->
+      <el-upload :show-file-list="false" :http-request="uploadImg" action="">
+      <!-- 传入一个内容 点击内容就会传出上传文件 -->
+         <el-button size="small" type='primary'>上传文件</el-button>
+         </el-upload>
+    </el-row>
+
      <!-- 放置标签页 v-model所绑定的值 就是当前所激活的页签-->
      <!-- 切换tabs页签的时候 需要进行事件的监听（点击事件） -->
      <el-tabs v-model="activeName" @tab-click="changeTab" >
@@ -21,8 +30,9 @@
                 <img :src="item.url" alt="">
                 <!-- 操作栏 -->
                 <el-row class="operate" type="flex" justify="space-around" align="middle">
-                   <i class="el-icon-star-on"></i>
-                   <i class="el-icon-delete-solid"></i>
+                   <!--给两个图标注册点击事件 根据数据判断图标的颜色-->
+                   <i @click="collectOrCancel(item)" :style="{color:item.is_collected?'red':'black'}" class="el-icon-star-on"></i>
+                   <i @click="delMaterial(item)" class="el-icon-delete-solid"></i>
 
                 </el-row>
               </el-card>
@@ -73,6 +83,60 @@ export default {
     }
   },
   methods: {
+    // 定义一个收藏或取消的方法
+    collectOrCancel (row) {
+      this.$axios({
+        // 请求地址
+        url: `/user/images/${row.id}`,
+        method: 'put',
+        data: { collect: !row.is_collected }
+      }).then(() => {
+        // 成功就要重新加载
+        this.getMaterial()
+      }).catch(() => {
+        this.$message.error('操作失败')
+      })
+    },
+    // 删除素材的方法
+    delMaterial (row) {
+      // 删除之前应该友好的问一下是不是要删除  confirm也是promise
+      this.$confirm('您确定要删除该图片吗？', '提示').then(() => {
+        // 如果确定删除  直接调用接口
+        this.$axios({
+          url: `/user/images/${row.id}`,
+          // 请求类型
+          method: 'delete'
+
+        }).then(() => {
+          this.getMaterial()
+        }).catch(() => {
+          this.$message.error('删除失败')
+        })
+      })
+    },
+    // 定义一个方法
+    uploadImg (params) {
+      //  params.file就是需要上传的图片文件
+      // 接口的参数类型要求是formData  首先实例化一个formData对象
+      const data = new FormData()
+      // 加入文件参数
+      data.append('image', params.file)
+      // 开始发送上传请求
+      this.$axios({
+        // 请求地址
+        url: '/user/images',
+        // 上传或者新增一般都是post类型
+        method: 'post',
+        // data: data 属性名和变量名一样可以只写一个 es6简写 如
+        data
+      }).then(() => {
+        // 如果成功了 可以重新拉取数据  也可以在前端删除
+        this.getMaterial()
+      }).catch(() => {
+        // 如果失败了显示
+        this.$message.error('上传素材失败')
+      })
+    },
     changePage (newPage) {
       // 定义一个方法 该方法会在页码切换时执行
       // 会传入一个新页
@@ -133,8 +197,8 @@ export default {
   // 换行
   flex-wrap: wrap;
   .img-card{
-    width: 220px;
-    height: 240px;
+    width: 279px;
+    height: 340px;
     margin: 20px 40px;
     position: relative;
     img{
