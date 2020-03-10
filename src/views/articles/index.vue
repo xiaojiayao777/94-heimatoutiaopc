@@ -1,5 +1,5 @@
 <template>
-  <el-card>
+  <el-card class="articles">
     <bread-crumb slot="header">
        <template slot="title">
          文章列表
@@ -34,6 +34,28 @@
           <el-date-picker type="daterange" v-model="searchForm.dataRange"></el-date-picker>
        </el-form-item>
     </el-form>
+    <!-- 文章主体结构 flex布局-->
+    <el-row class="total" type="flex" align="middle">
+       <span>共找到1000条符合条件的内容</span>
+    </el-row>
+    <!-- 列表内容 -->
+    <!-- article-item作为一个循环项 -->
+    <div class="article-item" v-for="item in 100" :key="item">
+      <!-- 左侧内容 -->
+       <div class="left">
+          <img src="http://img3.imgtn.bdimg.com/it/u=2773096519,71996258&fm=26&gp=0.jpg" alt="">
+          <div class="info">
+              <span>我爱我的祖国</span>
+              <el-tag class="tag">已发表</el-tag>
+              <span class="data">2020:02</span>
+           </div>
+       </div>
+       <!-- 右侧内容 -->
+       <div class="right">
+           <span><i class="el-icon-edit"></i>修改</span>
+           <span><i class="el-icon-delete"></i>删除</span>
+       </div>
+    </div>
   </el-card>
 </template>
 
@@ -71,6 +93,54 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less" scoped>
+.articles{
+  .total{
+     height: 60px;
+     border-bottom: 1px dashed #ccc;
+  }
+  // 对文章循环项进行样式编写
+  .article-item{
+    display: flex;
+    // 两头对齐
+    justify-content: space-between;
+    padding:20px 0;
+    border-bottom: 1px solid #ccc;
+    .left{
+       display: flex;
+       img{
+         width: 180px;
+         height: 100px;
+         border-radius: 20px;
+       }
+       .info{
+         display: flex;
+        //  变成竖项
+         flex-direction: column;
+         height: 100px;
+        //  竖值间距相等
+         justify-content: space-around;
+         margin-left: 10px;
+         .data{
+           color: #999;
+           font-size: 12px;
+         }
+         .tag{
+           width: 60px;
+           text-align: center;
+         }
 
+       }
+     }
+     .right{
+       span{
+         font-size: 14px;
+         margin-right: 8px;
+        //  鼠标放上之后显示
+         cursor: pointer;
+         user-select:none;
+       }
+     }
+  }
+}
 </style>
