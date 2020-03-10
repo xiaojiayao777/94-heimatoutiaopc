@@ -1,7 +1,7 @@
 <template>
-  <el-card class="articles">
-    <bread-crumb slot="header">
-       <template slot="title">
+  <el-card class='articles'>
+    <bread-crumb slot='header'>
+       <template slot='title'>
          文章列表
        </template>
     </bread-crumb>
@@ -24,10 +24,11 @@
        </el-form-item>
        <el-form-item label="频道类型：">
          <!-- 选择器 -->
-         <el-select placeholder="请选择频道" v-model="searchForm.channel_id"></el-select>
+         <el-select placeholder="请选择频道" v-model="searchForm.channel_id">
          <!-- 下拉选项 应该通过接口来获取数据 -->
          <!-- el-option是下来选项 label是显示值 value是绑定的值 -->
          <el-option v-for="item in channels" :key="item.id" :label="item.name" :value="item.id"></el-option>
+         </el-select>
        </el-form-item>
        <el-form-item label="日期范围：">
           <!-- 日期范围选择组件 type属性要设置daterange-->
@@ -40,14 +41,18 @@
     </el-row>
     <!-- 列表内容 -->
     <!-- article-item作为一个循环项 -->
-    <div class="article-item" v-for="item in 100" :key="item">
+    <div class="article-item" v-for="item in list" :key="item.id.toString()">
       <!-- 左侧内容 -->
        <div class="left">
-          <img src="http://img3.imgtn.bdimg.com/it/u=2773096519,71996258&fm=26&gp=0.jpg" alt="">
+         <!-- 设置文章的封面 有的数组有值 有的没值 搞一个默认值 -->
+         <!-- 用判断图片不显示 可以先在data中定义一个变量  采用变量的形式赋值-->
+          <img :src="item.cover.images.length?item.cover.images[0]:defaultImg" alt="">
           <div class="info">
-              <span>我爱我的祖国</span>
-              <el-tag class="tag">已发表</el-tag>
-              <span class="data">2020:02</span>
+              <span>{{item.title}}</span>
+              <!-- 改变显示的格式 可以用过滤器 -->
+              <!-- 两个过滤器 分别处理 标签类型 和 显示文本 -->
+              <el-tag :type="item.status|filterType" class="tag">{{item.status|filterStatus}}</el-tag>
+              <span class="data">{{item.pubdate}}</span>
            </div>
        </div>
        <!-- 右侧内容 -->
@@ -72,7 +77,41 @@ export default {
         channel_id: null, // 表示没有任何的频道
         dataRange: []// 日期范围
       },
-      channels: []// 专门来接受频道的数据
+      channels: [], // 专门来接受频道的数据
+      // 定义一个list数据接收文章列表
+      list: [],
+      // 地址对应文件变成变量 编译是会被拷贝到对应位置
+      defaultImg: require('../../assets/img/13.jpg')
+    }
+  },
+  // 定义一个过滤器 专门处理显示格式的
+  filters: {
+    // 过滤器的第一个参数 是value 别人传给我的值
+    filterStatus (value) {
+      switch (value) {
+        case 0:
+          return '草稿'
+        case 1:
+          return '待审核'
+        case 2:
+          return '已发表'
+        case 3:
+          return '审核失败'
+      }
+    },
+    // 过滤器除了用在插值表达式中 也可以用在v-bind的表达式中
+    filterType (value) {
+      // 根据当前状态的值显示不同类型的tag标签
+      switch (value) {
+        case 0:
+          return 'warning'
+        case 1:
+          return 'info'
+        case 2:
+          return ''
+        case 3:
+          return 'danger'
+      }
     }
   },
   methods: {
@@ -84,11 +123,22 @@ export default {
         // 获频道接口返回的数据
         this.channels = result.data.channels
       })
+    },
+    getArticles () {
+      // 获取文章列表
+      this.$axios({
+        // 请求地址
+        url: '/articles'
+      }).then(result => {
+        this.list = result.data.results
+      })
     }
   },
   created () {
     // 获取频道数据
     this.getChannels()
+    // 手动调用获取文章数据
+    this.getArticles()
   }
 }
 </script>
