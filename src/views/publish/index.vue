@@ -76,6 +76,17 @@ export default {
     }
   },
   methods: {
+    // 根据id获取文章详情数据
+    getArticleById (id) {
+      // 获取数据
+      this.$axios({
+        // 请求地址
+        url: `/articles/${id}`
+      }).then(result => {
+        // 将数据赋值给表单数据
+        this.publishForm = result.data
+      })
+    },
     // 获取频道数据
     getChannels () {
       this.$axios({
@@ -97,29 +108,70 @@ export default {
       //   }
       // })
       this.$refs.myForm.validate().then(() => {
-        // 如果进了then表示校验成功 应该去调用发布接口
+        // 如果id不为空 就是修改  如果为空就是发布新文章
+        //
+        const { articleId } = this.$route.params
         this.$axios({
-          url: '/articles',
-          // 请求地址
-          method: 'post',
-          params: {
-            // query参数
-            draft
-          },
-          data: this.publishForm // body参数
+          // 根据场景 id 决定用什么地址
+          url: articleId ? `/articles/${articleId}` : 'articles',
+          // 根据场景 id 决定用什么类型
+          method: articleId ? 'put' : 'post',
+          params: { draft },
+          data: this.publishForm
         }).then(() => {
-          this.$message.success('发布成功！')
-          // 如果发布成功 跳到文章列表
+          // 如果发布成功
+          this.$message.success('操作成功！')
+          // 跳到文章列表
           this.$router.push('/home/articles')
         }).catch(() => {
-          this.$message.error('发布失败！')
+          this.$message.error('操作失败！')
         })
+      //   if (articleId) {
+      //     // 修改
+      //     this.$axios({
+      //       // 修改地址
+      //       url: `/articles/${articleId}`,
+      //       method: 'put',
+      //       params: { draft },
+      //       data: this.publishForm
+      //     }).then(() => {
+      //       // 如果发布成功
+      //       this.$message.success('发布成功！')
+      //     }).catch(() => {
+      //       this.$message.error('发布失败！')
+      //     })
+      //   } else {
+      //     // 如果进了then表示校验成功 应该去调用发布接口
+      //     this.$axios({
+      //       url: '/articles',
+      //       // 请求地址
+      //       method: 'post',
+      //       params: { draft// query参数
+      //       },
+      //       data: this.publishForm // body参数
+      //     }).then(() => {
+      //       this.$message.success('发布成功！')
+      //       // 如果发布成功 跳到文章列表
+      //       this.$router.push('/home/articles')
+      //     }).catch(() => {
+      //       this.$message.error('发布失败！')
+      //     })
+      //   }
       })
     }
   },
+  // 在钩子函数中判断是否存在 文章id 如果存在 获取数据
   created () {
     // 调用获取频道数据的方法
     this.getChannels()
+    // articleId是在路由参数中定义的
+    const { articleId } = this.$route.params
+    // 另一种方法 &&运算符 如果前面为true 才会执行后边的代码
+    articleId && this.getArticleById(articleId)
+    // if (articleId) {
+    //   // 获取文章数据
+    //   this.getArticleById(articleId)
+    // }
   }
 
 }
