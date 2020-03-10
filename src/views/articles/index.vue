@@ -67,6 +67,18 @@
            <span><i class="el-icon-delete"></i>删除</span>
        </div>
     </div>
+    <!-- 放置分页组件 -->
+    <el-row type="flex" justify="center" align="middle" style="height:80px">
+      <!-- 分页组件内容 -->
+       <el-pagination
+       :current-page="page.currentPage"
+       :page-size="page.pageSize"
+       :total="page.total"
+       @current_change="changepage"
+       background layout="prev,pager,next">
+
+       </el-pagination>
+    </el-row>
   </el-card>
 </template>
 
@@ -74,6 +86,14 @@
 export default {
   data () {
     return {
+      page: {
+        // 当前页码
+        currentPage: 1,
+        // 每页多少条 接口要求每页10-50条之间
+        pageSize: 10,
+        // 总数
+        total: 0
+      },
       // 定义一个表单数据对象
       searchForm: {
         // 数据
@@ -98,6 +118,8 @@ export default {
       // 固定写法 一旦数据发生任何变化 就会触发更新
       // 统一调用改变条件方法
       // this指向当前的组件实例
+      // 只要条件变化就变成第一页
+        this.page.currentPage = 1
         this.changeCondition()
       },
       // 固定写法 表示会深度检测searchForm中的数据变化
@@ -136,17 +158,28 @@ export default {
     }
   },
   methods: {
+    changepage (newPage) {
+      // 改变页码事件
+      // 带条件翻页 组装条件
+      // 先将最新的页码给到当前页码
+      this.page.currentPage = newPage
+      // 直接调用改变事件方法
+      this.changeCondition()
+    },
     changeCondition () {
       // 改变了条件
       // 当初发此方法时表单数据已经变成最新的了
       const params = {
+        // 如果条件变化就回到第一页
+        page: this.page.currentpage,
+        per_page: this.page.pageSize,
         // 5是我们前端虚构的
         status: this.searchForm.status === 5 ? null : this.searchForm.status,
         // 这就是表单的数据
         channel_id: this.searchForm.channel_id,
         //
-        begin_pubdate: this.searchForm.dataRange.length ? this.searchForm.dataRange[0] : null,
-        end_pubdate: this.searchForm.dataRange.length > 1 ? this.searchForm.dataRange[1] : null
+        begin_pubdate: this.searchForm.dataRange && this.searchForm.dataRange.length ? this.searchForm.dataRange[0] : null,
+        end_pubdate: this.searchForm.dataRange && this.searchForm.dataRange.length > 1 ? this.searchForm.dataRange[1] : null
       }
       // 通过接口传入
       this.getArticles(params)
@@ -169,6 +202,8 @@ export default {
         params: params
       }).then(result => {
         this.list = result.data.results
+        // 将总数赋值给total
+        this.page.total = result.data.total_count
       })
     }
   },
