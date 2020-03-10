@@ -12,7 +12,7 @@
     <el-form style="padding-left:50px">
        <el-form-item label="文章状态：">
          <!-- 放置单选框组 -->
-          <el-radio-group v-model="searchForm.status">
+          <el-radio-group v-model="searchForm.status" @change="changeCondition">
              <!-- 放置单选框选项 lable表示该选项对应的值 :lable的意思是后边的数字不会加冒号-->
              <!-- // 文章状态，0-草稿，1-待审核，2-审核通过，3-审核失败，4-已删除，不传为全部  定义5为全部 -->
              <el-radio :label="5">全部</el-radio>
@@ -24,7 +24,7 @@
        </el-form-item>
        <el-form-item label="频道类型：">
          <!-- 选择器 -->
-         <el-select placeholder="请选择频道" v-model="searchForm.channel_id">
+         <el-select @change="changeCondition" placeholder="请选择频道" v-model="searchForm.channel_id">
          <!-- 下拉选项 应该通过接口来获取数据 -->
          <!-- el-option是下来选项 label是显示值 value是绑定的值 -->
          <el-option v-for="item in channels" :key="item.id" :label="item.name" :value="item.id"></el-option>
@@ -32,7 +32,7 @@
        </el-form-item>
        <el-form-item label="日期范围：">
           <!-- 日期范围选择组件 type属性要设置daterange-->
-          <el-date-picker type="daterange" v-model="searchForm.dataRange"></el-date-picker>
+          <el-date-picker @change="changeCondition" type="daterange" value-format="yyyy-MM-dd" v-model="searchForm.dataRange"></el-date-picker>
        </el-form-item>
     </el-form>
     <!-- 文章主体结构 flex布局-->
@@ -115,6 +115,21 @@ export default {
     }
   },
   methods: {
+    changeCondition () {
+      // 改变了条件
+      // 当初发此方法时表单数据已经变成最新的了
+      const params = {
+        // 5是我们前端虚构的
+        status: this.searchForm.status === 5 ? null : this.searchForm.status,
+        // 这就是表单的数据
+        channel_id: this.searchForm.channel_id,
+        //
+        begin_pubdate: this.searchForm.dataRange.length ? this.searchForm.dataRange[0] : null,
+        end_pubdate: this.searchForm.dataRange.length > 1 ? this.searchForm.dataRange[1] : null
+      }
+      // 通过接口传入
+      this.getArticles(params)
+    },
     getChannels () {
       // 获取频道数据
       this.$axios({
@@ -124,11 +139,13 @@ export default {
         this.channels = result.data.channels
       })
     },
-    getArticles () {
+    getArticles (params) {
       // 获取文章列表
       this.$axios({
         // 请求地址
-        url: '/articles'
+        url: '/articles',
+        // es6写法 简写 可以只写一个 也可以写两个
+        params: params
       }).then(result => {
         this.list = result.data.results
       })
