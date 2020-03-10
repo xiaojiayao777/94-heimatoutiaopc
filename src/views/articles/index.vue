@@ -12,7 +12,9 @@
     <el-form style="padding-left:50px">
        <el-form-item label="文章状态：">
          <!-- 放置单选框组 -->
-          <el-radio-group v-model="searchForm.status" @change="changeCondition">
+         <!-- 第一种方法：@change  监听值改变的方式 -->
+          <!-- <el-radio-group v-model="searchForm.status" @change="changeCondition"> -->
+          <el-radio-group v-model="searchForm.status">
              <!-- 放置单选框选项 lable表示该选项对应的值 :lable的意思是后边的数字不会加冒号-->
              <!-- // 文章状态，0-草稿，1-待审核，2-审核通过，3-审核失败，4-已删除，不传为全部  定义5为全部 -->
              <el-radio :label="5">全部</el-radio>
@@ -24,7 +26,9 @@
        </el-form-item>
        <el-form-item label="频道类型：">
          <!-- 选择器 -->
-         <el-select @change="changeCondition" placeholder="请选择频道" v-model="searchForm.channel_id">
+          <!-- 第一种方法：@change  监听值改变的方式 -->
+         <!-- <el-select @change="changeCondition" placeholder="请选择频道" v-model="searchForm.channel_id"> -->
+         <el-select placeholder="请选择频道" v-model="searchForm.channel_id">
          <!-- 下拉选项 应该通过接口来获取数据 -->
          <!-- el-option是下来选项 label是显示值 value是绑定的值 -->
          <el-option v-for="item in channels" :key="item.id" :label="item.name" :value="item.id"></el-option>
@@ -32,7 +36,9 @@
        </el-form-item>
        <el-form-item label="日期范围：">
           <!-- 日期范围选择组件 type属性要设置daterange-->
-          <el-date-picker @change="changeCondition" type="daterange" value-format="yyyy-MM-dd" v-model="searchForm.dataRange"></el-date-picker>
+           <!-- 第一种方法：@change  监听值改变的方式 -->
+          <!-- <el-date-picker @change="changeCondition" type="daterange" value-format="yyyy-MM-dd" v-model="searchForm.dataRange"></el-date-picker> -->
+          <el-date-picker type="daterange" value-format="yyyy-MM-dd" v-model="searchForm.dataRange"></el-date-picker>
        </el-form-item>
     </el-form>
     <!-- 文章主体结构 flex布局-->
@@ -83,6 +89,21 @@ export default {
       // 地址对应文件变成变量 编译是会被拷贝到对应位置
       defaultImg: require('../../assets/img/13.jpg')
     }
+  },
+  // 监听data中的数据变化
+  // 第二种解决方案 watch监听对象的深度检测方案
+  watch: {
+    searchForm: {
+      handler () {
+      // 固定写法 一旦数据发生任何变化 就会触发更新
+      // 统一调用改变条件方法
+      // this指向当前的组件实例
+        this.changeCondition()
+      },
+      // 固定写法 表示会深度检测searchForm中的数据变化
+      deep: true
+    }
+
   },
   // 定义一个过滤器 专门处理显示格式的
   filters: {
