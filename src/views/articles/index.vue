@@ -63,7 +63,10 @@
        </div>
        <!-- 右侧内容 -->
        <div class="right">
-           <span><i class="el-icon-edit"></i>修改</span>
+         <!-- 第一种  事件绑方法 -->
+           <!-- <span @click="toPublish"><i class="el-icon-edit"></i>修改</span> -->
+        <!-- 第二种 事件直接跟逻辑 -->
+           <span @click="$router.push(`/home/publish/${item.id.toString()}`)"><i class="el-icon-edit"></i>修改</span>
            <!-- 需要传递参数 传递要删除的id  -->
            <span @click="delMaterial(item.id.toString())"><i class="el-icon-delete"></i>删除</span>
        </div>
@@ -159,6 +162,12 @@ export default {
     }
   },
   methods: {
+
+    toPublish () {
+      // 跳转到发布页面
+      // 通过编程式导航
+      this.$router.push('/home/publish')
+    },
     delMaterial (id) {
       // 定义一个删除素材的方法
       // 如果要删除 先友好地提示一下

@@ -43,7 +43,8 @@ const routes = [
         path: '/home/articles',
         component: () => import('@/views/articles')
       }, {
-        path: '/home/publish',
+        // 发布文章 加上问号表示可有可无
+        path: '/home/publish/:articleId?',
         component: () => import('@/views/publish')
       }
 
