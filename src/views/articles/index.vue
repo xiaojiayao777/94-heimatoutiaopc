@@ -64,7 +64,8 @@
        <!-- 右侧内容 -->
        <div class="right">
            <span><i class="el-icon-edit"></i>修改</span>
-           <span><i class="el-icon-delete"></i>删除</span>
+           <!-- 需要传递参数 传递要删除的id  -->
+           <span @click="delMaterial(item.id.toString())"><i class="el-icon-delete"></i>删除</span>
        </div>
     </div>
     <!-- 放置分页组件 -->
@@ -158,6 +159,26 @@ export default {
     }
   },
   methods: {
+    delMaterial (id) {
+      // 定义一个删除素材的方法
+      // 如果要删除 先友好地提示一下
+      this.$confirm('您确定删除这条数据吗？', '提示').then(() => {
+        // 如果进入了then表示他点击了确定 就去掉接口 删除
+        this.$axios({
+          // 地址是 /articles/：target  target是文章的id
+          url: `/articles/${id}`,
+          method: 'delete'
+        }).then(() => {
+          // 如果删除成功了 就重新获取数据
+          // this.getArticles()如果这么写就表示  你舍弃了当前的页码和条件
+          // 应该带着条件和页码去加载
+          // 把数据重新加载一下
+          this.changeCondition()
+        }).catch(() => {
+          this.$message.error('删除文章失败')
+        })
+      })
+    },
     changepage (newPage) {
       // 改变页码事件
       // 带条件翻页 组装条件
