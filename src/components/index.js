@@ -3,6 +3,12 @@
 import LayoutHeader from './home/layout-header'
 import LayoutAside from './home/layout-aside'
 import Breadcrumb from './common/bread-crumb'
+import VueQuillEditor from 'vue-quill-editor'
+
+// require styles
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
 export default {
   install: function (Vue) {
     // alert('666')
@@ -10,5 +16,9 @@ export default {
     Vue.component('layout-header', LayoutHeader)// 注册头部组件
     Vue.component('layout-aside', LayoutAside)// 注册侧边栏组件
     Vue.component('bread-crumb', Breadcrumb)// 注册一个面包屑组件
+    // 注册 富文本编辑
+    // 注册完毕 可以在任意位置使用 quill-editor组件了  这个组件应该拿去替换我们的input
+    // 支持v-model双向绑定
+    Vue.use(VueQuillEditor)
   }
 }
