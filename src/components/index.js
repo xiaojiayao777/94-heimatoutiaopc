@@ -4,6 +4,7 @@ import LayoutHeader from './home/layout-header'
 import LayoutAside from './home/layout-aside'
 import Breadcrumb from './common/bread-crumb'
 import VueQuillEditor from 'vue-quill-editor'
+import CoverImage from './publish/cover-image'
 
 // require styles
 import 'quill/dist/quill.core.css'
@@ -20,5 +21,7 @@ export default {
     // 注册完毕 可以在任意位置使用 quill-editor组件了  这个组件应该拿去替换我们的input
     // 支持v-model双向绑定
     Vue.use(VueQuillEditor)
+    // 注册封面组件
+    Vue.component('cover-image', CoverImage)
   }
 }
