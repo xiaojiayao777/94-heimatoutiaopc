@@ -19,7 +19,7 @@
        <el-form-item prop="cover" label="封面" style="margin-top:120px">
          <!-- 单选框组 -->
          <!-- 封面单选绑定的是封面cover中的type -->
-          <el-radio-group v-model="publishForm.cover.type">
+          <el-radio-group v-model="publishForm.cover.type" @change="changeType">
               <!-- 需要给每个el-radio加上lable属性 -->
              <el-radio :label="1">单图</el-radio>
              <el-radio :label="3">三图</el-radio>
@@ -79,6 +79,21 @@ export default {
     }
   },
   methods: {
+    // 改变类型事件
+    changeType () {
+      //  我们应该根据type 的值 对images进行控制
+      if (this.publishForm.cover.type === 1) {
+        // 单图模式  此时还没有选择图片 所以给一个空字符串
+        this.publishForm.cover.images = ['']
+      } else if (this.publishForm.cover.type === 3) {
+        // 此时还没有选择图片 所以给 3 个空字符串
+        this.publishForm.cover.images = ['', '', '']
+      } else {
+        // 无图或自动时 给一个空数组
+        this.publishForm.cover.images = []
+      }
+    },
+
     // 根据id获取文章详情数据
     getArticleById (id) {
       // 获取数据
