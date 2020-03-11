@@ -29,7 +29,7 @@
        </el-form-item>
        <!-- 放置封面组件 -->
        <!-- 父传子  把封面组件传递给子组件 -->
-       <cover-image :list="this.publishForm.cover.images"></cover-image>
+       <cover-image @selectTwoImg="receiveImg" :list="this.publishForm.cover.images"></cover-image>
 
        <el-form-item label="频道" prop="channel_id">
          <!-- select选择器 -->
@@ -83,6 +83,13 @@ export default {
     }
   },
   methods: {
+
+    receiveImg (url, index) {
+      // 接收cover-image传递过来的数据
+      // 需要更新images的数组
+      // 删除替换元素  splice(索引，要删除的个数，替换的个数)
+      this.publishForm.cover.images.splice(index, 1, url)
+    },
     // 改变类型事件
     changeType () {
       //  我们应该根据type 的值 对images进行控制

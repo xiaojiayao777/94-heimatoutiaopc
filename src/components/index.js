@@ -5,6 +5,7 @@ import LayoutAside from './home/layout-aside'
 import Breadcrumb from './common/bread-crumb'
 import VueQuillEditor from 'vue-quill-editor'
 import CoverImage from './publish/cover-image'
+import SelectImage from './publish/select-image'
 
 // require styles
 import 'quill/dist/quill.core.css'
@@ -23,5 +24,7 @@ export default {
     Vue.use(VueQuillEditor)
     // 注册封面组件
     Vue.component('cover-image', CoverImage)
+    // 注册图片组件
+    Vue.component('select-image', SelectImage)
   }
 }
