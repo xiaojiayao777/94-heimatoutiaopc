@@ -28,7 +28,10 @@
         </el-form-item>
      </el-form>
      <!-- 头像 -->
-     <img class="head-upload" :src="formData.photo?formData.photo:defaultImg" alt="">
+     <el-upload action="" :http-request="uploadImg" :show-file-list="false">
+         <img class="head-upload" :src="formData.photo?formData.photo:defaultImg" alt="">
+     </el-upload>
+
   </el-card>
 </template>
 
@@ -81,6 +84,21 @@ export default {
         }).catch(() => {
           this.$message.error('保存用户信息失败')
         })
+      })
+    },
+    uploadImg (params) {
+      //  上传头像
+      // params.file
+      const data = new FormData()
+      data.append('photo', params.file) // params.file 就是选择的文件
+      this.$axios({
+        url: '/user/photo',
+        method: 'patch',
+        data // 要传递的参数
+      }).then(result => {
+        this.formData.photo = result.data.photo // 拿到新头像地址了 你需要把新地址赋值给当前页面的地址
+        // 现在拿到新地址了 但是 头部组件的地址吗没有更新
+        // 需要处理非关系型组件之间的传值 eventBus /vuex
       })
     }
   },
