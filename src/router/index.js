@@ -12,6 +12,11 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    // 表示匹配任何找不到组件的路由
+    path: '*',
+    component: () => import('@/views/404')
+  },
+  {
     // 强制跳转到home页
     path: '/',
     redirect: 'home'
