@@ -46,6 +46,10 @@ const routes = [
         // 发布文章 加上问号表示可有可无
         path: '/home/publish/:articleId?',
         component: () => import('@/views/publish')
+      }, {
+        // 简写
+        path: 'account', // 账户地址
+        component: () => import('@/views/account')// 账户组件
       }
 
     ]
