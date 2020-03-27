@@ -4,7 +4,7 @@
     <el-card class="login-card">
       <!-- 头部login部分 -->
        <div class="title">
-        <img src="../../assets/img/logo_index.png" alt />
+        <img src="../../assets/img/x2.jpg" alt />
        </div>
       <!-- 表单容器  要绑定model属性 rules属性(表单验证规则)-->
       <!-- 加上:才会把model看成一个变量 -->
@@ -15,8 +15,8 @@
               <el-input v-model="loginForm.mobile" placeholder="请输入手机号" ></el-input>
           </el-form-item>
           <el-form-item prop="code">
-              <el-input v-model="loginForm.code" style="width:60%;" placeholder="请输入验证码"></el-input>
-              <el-button style="float:right; width:35%" plain>发送验证码</el-button>
+              <el-input v-model="loginForm.code"  placeholder="请输入密码"></el-input>
+              <!-- <el-button style="float:right; width:35%" style="width:60%;" plain>发送验证码</el-button> -->
           </el-form-item>
           <el-form-item prop="checked">
               <el-checkbox v-model="loginForm.checked" style="color:#ccc">我已阅读并同意用户协议和隐私条款</el-checkbox>
@@ -49,9 +49,9 @@ export default {
         ],
         // 验证码的验证规则
         code: [
-          { required: true, message: '您的验证码不能为空' },
+          { required: true, message: '您的密码不能为空' },
           // 验证码要求六个数字
-          { pattern: /^\d{6}$/, message: '验证码应该是六位数字' }
+          { pattern: /^\d{6}$/, message: '密码应该是六位数字' }
         ],
         // 是否勾选的验证规则
         // required不能验证false和true，为true，是必填项
@@ -133,6 +133,7 @@ export default {
       // img是行内元素，所以在外边的块级元素给一个text-align：center可居中
       text-align: center;
       img {
+        // width: 50%;
         height: 56px;
       }
     }

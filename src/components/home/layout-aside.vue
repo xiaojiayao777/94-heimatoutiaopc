@@ -1,7 +1,7 @@
 <template>
   <div class="layout-aside">
      <div class="title">
-        <img src="../../assets/img/logo_admin.png" alt="">
+        <img src="../../assets/img/x2.jpg" alt="">
      </div>
      <!-- 加上：才不是字符串，才真正的开启了路由模式  简写router，直接写个router效果是一样的 -->
      <el-menu :router="true" background-color="#323745" text-color="#adafb5">
@@ -52,6 +52,7 @@ export default {
      text-align: center;
      padding: 10px 0;
       img{
+        width: 50px;
         height: 35px;
 
       }
