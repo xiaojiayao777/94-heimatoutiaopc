@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import eventBus from '@/utils/eventBus.js'
 export default {
   data () {
     return {
@@ -56,21 +57,28 @@ export default {
         // 跳回登录页面 编程式导航
         this.$router.push('/login')
       }
-    }
-  },
-  created () {
-    // 从兜里拿钥匙===从缓存中取token
+    },
+    getUserInfo () {
+      // 从兜里拿钥匙===从缓存中取token
     // const token = localStorage.getItem('user-token')
-    this.$axios({
+      this.$axios({
       // 请求地址
-      url: '/user/profile'
+        url: '/user/profile'
       // //  放置请求头参数
       // headers: {
       //   Authorization: `Bearer ${token}`
       // }
-    }).then(result => {
+      }).then(result => {
       // 如果加载成功了，把数据给useInfo
-      this.userInfo = result.data
+        this.userInfo = result.data
+      })
+    }
+  },
+  created () {
+    this.getUserInfo()
+    eventBus.$on('updateUser', () => {
+      // 监听 updateUser  改变之后，重新拉取数据
+      this.getUserInfo()
     })
   }
 }
