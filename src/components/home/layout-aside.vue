@@ -4,7 +4,8 @@
         <img src="../../assets/img/x2.jpg" alt="">
      </div>
      <!-- 加上：才不是字符串，才真正的开启了路由模式  简写router，直接写个router效果是一样的 -->
-     <el-menu :router="true" background-color="#323745" text-color="#adafb5">
+     <!-- 使用属性 -->
+     <el-menu  :collapse="collapse" :router="true" background-color="#323745" text-color="#adafb5">
         <el-menu-item index="/home">
            <i class="el-icon-s-home"></i>
            <span>首页</span>
@@ -15,7 +16,7 @@
             <span>内容管理</span>
           </template>
           <el-menu-item index='/home/publish'>发布文章</el-menu-item>
-          <el-menu-item index='/home/articles'>内容列表</el-menu-item>
+          <el-menu-item index='/home/articles'>文章列表</el-menu-item>
           <el-menu-item index='/home/comment'>评论列表</el-menu-item>
           <el-menu-item index='/home/material'>素材管理</el-menu-item>
         </el-submenu>
@@ -38,7 +39,9 @@
 </template>
 
 <script>
+// 接收属性
 export default {
+  props: ['collapse']
 
 }
 </script>

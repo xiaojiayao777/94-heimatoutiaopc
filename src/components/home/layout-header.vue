@@ -3,7 +3,8 @@
   <el-row type="flex" align="middle" class="layout-header">
     <!-- :span是因为“12”本来是字符串，加上：之后就会看成数字 -->
      <el-col class="left" :span="12" >
-        <i class="el-icon-s-fold"></i>
+       <!-- ：class={class名：布尔值，class名：布尔值} -->
+        <i @click="collapse=!collapse" :class="{'el-icon-s-fold':!collapse,'el-icon-s-unfold':collapse}"></i>
         <span>博客管理系统</span>
      </el-col>
      <el-col class="right" :span="12">
@@ -38,8 +39,16 @@ export default {
       userInfo: {
         // name: '22',
         // photo: 'http://img1.imgtn.bdimg.com/it/u=2003328295,1600589916&fm=26&gp=0.jpg'
-      }
+      },
+      collapse: false // 默认开始不是折叠的
     }
+  },
+  watch: {
+    collapse () {
+      // 折叠状态变了，通知导航栏组件
+      eventBus.$emit('changeCollapse')// 触发一个改变折叠状态的事件
+    }
+
   },
   methods: {
     clickMenu (command) {
